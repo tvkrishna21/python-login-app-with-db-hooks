@@ -1,0 +1,12 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mysql-pv
+spec:
+  capacity:
+    storage: 5Gi
+  awsElasticBlockStore:
+    volumeID: 'aws://ap-south-1a/vol-0048dd27cbbb72c53'
+    fsType: ext4
+  accessModes:
+    - ReadWriteOnce
