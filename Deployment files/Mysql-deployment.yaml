@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: custom-metrics
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: >-
+            tvkrishna21/mysql-custmetrics:1.0.0
+          args:
+            - "--ignore-db-dir=lost+found"
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+          volumeMounts:
+          - mountPath: "/var/lib/mysql"
+            name: myvol
+      volumes:
+      - name: myvol
+        persistentVolumeClaim:
+          claimName: mysql-pvc
